@@ -1,39 +1,49 @@
-#include <stdin.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// https://leetcode.com/problems/add-binary/description/
+char *addBinary(char *a, char*b);
+
+int main(){
+    char *a = "111";
+    char *b = "111";
+    char *result = addBinary(a,b);
+    printf("Test\n");
+}
 
 char *addBinary(char *a, char *b)
 {
-    // Create two int arrays
-    // Iterate over each char * putting the value of converted binary into respective place in the array
-    // do a + on the numbers
-    // convert to char *
-    // return
     int aBin[32];
     int bBin[32];
     int result[32];
+    int i;
+    int aLen = strlen(a);
+    int bLen = strlen(b);
+    for(i = 0; i < 32; i++){
+        aBin[i] = -1;
+        bBin[i] = -1;
+        result[i] = -1;
+    }
     int aInt = atoi(a);
     int bInt = atoi(b);
-
     // Convert a to binary
-    int i = 0;
-    while (aInt > 0)
-    {
-        aBin[i] = aInt % 2;
-        aInt /= 2;
+    i = 0;
+    while(aInt > 0){
+        aBin[i]= aInt % 2;
+        aInt /= 10;
         i++;
     }
     i = 0;
-    // Convert b to binary
-    while (bInt > 0)
-    {
-        bBin[i] = bInt % 2;
-        bInt /= 2;
+    while(bInt > 0){
+        bBin[i]= bInt % 2;
+        bInt /= 10;
         i++;
     }
-    int i = 0;
     int addResult;
     int remainder = 0;
     // Do binary add
-    while ((aBin[i] != NULL) && (bBin[i] != NULL))
+    i = 0;
+    while ((aBin[i] != -1) && (bBin[i] != -1))
     {
         addResult = aBin[i] + bBin[i] + remainder;
         if (addResult == 2)
@@ -49,9 +59,9 @@ char *addBinary(char *a, char *b)
         result[i] = addResult;
         i++;
     }
-    if (aBin[i] != NULL)
+    if (aBin[i] != -1)
     {
-        while (aBin[i] != NULL)
+        while (aBin[i] != -1)
         {
             addResult = aBin[i] + remainder;
             if (addResult == 2)
@@ -63,9 +73,9 @@ char *addBinary(char *a, char *b)
             i++;
         }
     }
-    if (bBin[i] != NULL)
+    if (bBin[i] != -1)
     {
-        while (bBin[i] != NULL)
+        while (bBin[i] != -1)
         {
             addResult = bBin[i] + remainder;
             if (addResult == 2)
@@ -77,4 +87,20 @@ char *addBinary(char *a, char *b)
             i++;
         }
     }
+    if(remainder == 1){
+        result[i] = remainder;
+    }
+    // Need to convert result into string
+    int numchars = i+1;
+    char *ret;
+    ret = (char*)malloc(sizeof(char) * numchars);
+    while(i > 0){
+    	if(result[i] == 1){
+            ret[i] = '1';
+        } else {
+            ret[i] = '0';
+        }
+        i--;
+    }
+    return ret;
 }
