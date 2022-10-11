@@ -1,10 +1,11 @@
 public class BreakPalindrome {
+    // https://leetcode.com/problems/break-a-palindrome/
     public static void main(String[] args){
         String palindrome = "aa";
         System.out.println(breakPalindrome(palindrome));
     }
     public static String breakPalindrome(String palindrome) {
-        // First break string in two
+        // Put string into array
         int strLen = palindrome.length();
         if (strLen <= 1) {
             return "";
@@ -12,32 +13,26 @@ public class BreakPalindrome {
         char[] palin = palindrome.toCharArray();
         int j = 0;
         int minChar = 'a';
+        int mid = -1;
         int isSwap = 0;
-        // Check to see if the midpoint falls on a character
-        if (strLen / 2 == 1) {
-            while(isSwap == 0){
-                if(palin[1] != ((char)(minChar + j))){
-                    palin[1] = ((char)(minChar + j));
-                    isSwap = 1;
-                }
-                j++;
-            }
-            String result = new String(palin);
-            return result;
+        if(strLen % 2 != 0) {
+            mid = (strLen / 2); 
         }
-        // Scan string to see first letter that can be replaced with a
-        // if all a's find first one that can be replaced with b
-        while (true) {
-            for (int i = 0; i < strLen / 2; i++) {
-                if (palin[i] != ((char)(minChar + j))) {
+        if(palin[0] != 'a') {
+            palin[0] = 'a';
+            isSwap = 1;
+        }
+        while(isSwap == 0){
+            // TODO iterate over first string, check for minChar sub
+            // Iterate over entire string
+            for(int i = 1; i < strLen; i++){
+                if((palin[i] != ((char)(minChar + j))) && (i != mid)){
                     palin[i] = ((char)(minChar + j));
-                    isSwap = 1;                        
+                    isSwap = 1;
                     break;
                 }
             }
-            if(isSwap == 1){
-                break;
-            }
+            // TODO if no minchar sub, check second half of string to put in minChar + j
             j++;
         }
         String result = new String(palin);
