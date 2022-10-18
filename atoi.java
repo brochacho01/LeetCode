@@ -1,6 +1,9 @@
 public class atoi {
     public static void main(String[] args) {
         int i = myAtoi("-91283472332");
+        // int i = myAtoi("42");
+        // int i = myAtoi("words and 987");
+        // int i = myAtoi("   -42");
         System.out.println(i);
     }
 
@@ -14,15 +17,15 @@ public class atoi {
         int i = 0;
         int numStart = -1;
         int numEnd = -1;
-        // First read in whitespace
-        while (s.charAt(i) == ' ') {
-            i++;
-        }
-        if (s.charAt(i) == '-') {
-            sign = -1;
-            i++;
-        }
-        if(s.charAt(i) == '+') {
+        // First move past whitespace and characters
+        while ((!Character.isDigit(s.charAt(i))) || s.charAt(i) == ' ') {
+            if (s.charAt(i) == '-') {
+                sign = -1;
+            }
+            if((s.charAt(i) == '-' && s.charAt(i + 1) == '+') || (s.charAt(i)))
+            if((!Character.isDigit(i)) && (s.charAt(i) != '+') && (s.charAt(i) != '-') && (s.charAt(i) != ' ')){
+                return 0;
+            }
             i++;
         }
         // Then read in int count;
@@ -36,22 +39,23 @@ public class atoi {
         // number chars there are, need to convert that section of string to int
         int[] arr = new int[lenNums];
         int j = 0;
-        for(i = numStart; i < numEnd; i++){
+        for (i = numStart; i < numEnd; i++) {
             arr[j] = (int) s.charAt(i) - '0';
             j++;
         }
         // Now convert to int
         int result = 0;
         int power = 1;
-        for(i = lenNums - 1; i>= 0; i--){
+        for (i = lenNums - 1; i >= 0; i--) {
             result += (arr[i] * power);
             power *= 10;
         }
         result *= sign;
-        if(result > (Math.pow(2, 31)) - 1){
-            result = (int)(Math.pow(2, 31)) - 1;
-        } else if(result < Math.pow(-2, 31)){
-            result = (int)(Math.pow(-2, 31));
+        if ((((arr[i + 1] * power * sign) + result < 0) && sign > 0) || (((arr[i + 1] * power * sign) + result > 0) && sign < 0)) {
+            result = (int) (Math.pow(2, 31));
+            if (sign == -1) {
+                result *= sign;
+            }
         }
         return result;
     }
