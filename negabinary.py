@@ -1,5 +1,7 @@
 from ast import List
 
+#Better way to do this is to continually pop items off of the arrays, I think there's also a way to condense cases?
+
 def addNegabinary(arr1, arr2):
     result = []
     # Need to start on the highest order bits as they represent the smallest numbers
