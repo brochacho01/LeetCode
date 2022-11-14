@@ -1,4 +1,3 @@
-package leetcode;
 public class RomantoInteger {
     // https://leetcode.com/problems/roman-to-integer/
     public static void main(String[] args) {
