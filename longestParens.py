@@ -1,29 +1,43 @@
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
+        numO = 0
+        numC = 0
+        curMax = 0
+        # Iterate from front to back looking at valid substrings
+        # Once more close than open have been read, current substring is invalid, check against max and update if needed
         sLen = len(s)
-        # Parens will be a 2d list where row 1 represents number open parens up to and including i
-        # row 2 represents number close parens after and including i
-        parens = []
-        # create dp list
-        r1 = []
-        r2 = []
-        # need dp to be 1 longer than s
-        for i in range(sLen + 1): 
-            r1.append(0)
-            r2.append(0)
-        parens.append(r1)
-        parens.append(r2)
-        j = sLen - 1
-        # going to have a bug regarding indexing at end of r2
         for i in range(sLen):
+            # Check char, increment
             if s[i] == '(':
-                parens[0][i+1] = parens[0][i] + 1
-            if s[j] == ')':
-                parens[1][j] = parens[1][j + 1] + 1
-            j -= 1
-        # Iterate back over dp array to find index that has greatest val where r1 matches r2
-        result = 0
-        for i in range(len(parens[0])):
-            if parens[0][i] == parens[1][i] and parens[0][i] > result:
-                result = parens[0][i]
-        return result
+                numO += 1
+            else:
+                numC +=1
+            # If numO and numC are equal, we have a valid substring, check against max and update as necessary
+            if numO == numC:
+                curMax = max(curMax, numO + numC)
+            # if numO < numC, we've found more close than open in this substring, therefore current substring is invalid, reset vals
+            elif numO < numC:
+                numO = 0
+                numC = 0
+        numO = 0
+        numC = 0
+        # Need to iterate back to front, because if upon first iteration there is always more open than close but there exists a valid substring, then the max will not get updated. But when evaluating based on closed parens this will catch it. First loop does this but visa versa
+        for i in range(sLen -1, -1, -1):
+            if s[i] == '(':
+                numO += 1
+            else:
+                numC += 1
+            if numO == numC:
+                curMax = max(curMax, numO + numC)
+            elif numO > numC:
+                numO = 0
+                numC = 0
+        return curMax
+
+
+
+def main():
+    print("Hello")
+
+if __name__ == "__main__":
+    main()
