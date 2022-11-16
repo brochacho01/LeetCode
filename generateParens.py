@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/generate-parentheses/solutions/2542620/python-java-w-explanation-faster-than-96-w-proof-easy-to-understand/
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         # Could brute force generate all, then validate
