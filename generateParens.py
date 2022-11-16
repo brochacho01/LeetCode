@@ -1,35 +1,19 @@
 # https://leetcode.com/problems/generate-parentheses/solutions/2542620/python-java-w-explanation-faster-than-96-w-proof-easy-to-understand/
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        # Could brute force generate all, then validate
-        result = []
-        self.parens("(", 1, n,  n-1, n, result)
-        return result
-
-    def parens(self, str, numP, n, numO, numC, result):
-        # This if doesn't work
-        print(numP)
-        if numP//2 == n and numO == 0 and numC == 0:
-            if self.validate(str):
-                result.append(str)
+        # Use a dfs style but be smarter than brute force because there is a pattern we can follow
+        def dfs(left, right, s):
+            # Base case
+            if len(s) == n * 2:
+                result.append(s)
                 return
-        else:
-            if numO > 0:
-                self.parens(str + "(", numP + 1, n, numO - 1, numC, result)
-            if numC > 0:
-                self.parens(str + ")", numP + 1, n, numO, numC - 1, result)
-        return
-
-    def validate(self, str):
-        numO = 0
-        for i in range(len(str)):
-            if str[i] == '(':
-                numO += 1
-            else:
-                numO -= 1
-            if numO < 0:
-                return False
-        if numO == 0:
-            return True
-        else:
-            return False
+            # We know the pattern for parenthesis. and we know number of pairs required
+            # One left represents one pair, so if we have less left than n, we can add an open parens
+            if left < n:
+                dfs(left + 1, right, s + '(')
+            # We know that for each open parens we need a close, but we can't have more close than open, so if we have more open, add a close
+            if right < left:
+                dfs(left, right + 1, s + ')')
+            result = []
+            dfs(0,0, '')
+            return result
