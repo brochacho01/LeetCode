@@ -1,3 +1,4 @@
+# NOTE for python: when you add a listA to listB and then later change listA, it changes in listB as well. make a copy of listA then add to listB
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         # Do a sort here because it allows us to impose some rules during backtracking
