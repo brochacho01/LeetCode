@@ -8,8 +8,7 @@ class Solution:
         sLen = len(strs)
         dc = {}
         for i in range(sLen):
-            curStr = strs[i]
-            curList = list(curStr)
+            curList = list(strs[i])
             List.sort(curList)
             # turn List back into string of sorted characters to use as a key
             curStr = str(curList)
@@ -19,7 +18,4 @@ class Solution:
                 stList = dc.get(curStr)
                 stList.append(strs[i])
                 dc.update({curStr : stList})
-        result = []
-        for key in dc.keys():
-            result.append(dc.get(key))
-        return result
+        return dc.values()    
