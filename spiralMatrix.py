@@ -11,6 +11,7 @@ class Solution:
         i = 0
         j = -1
         # Just do 4 for loops
+        # By nature of spiraling, at the end of each loop, our "leftover" rows or columns decrease in size by 1
         while cellsCounted < numCells:
             # Start by going right
             for k in range(rLen):
