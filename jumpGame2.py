@@ -1,4 +1,5 @@
 class Solution:
+    # checks to see how many jumps it takes to get to the end
     def jump(self, nums: List[int]) -> int:
         # This is a dp problem
         nLen = len(nums)
